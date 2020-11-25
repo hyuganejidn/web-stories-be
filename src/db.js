@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const connect = (dbURI) => {
   const options = {
@@ -12,4 +12,4 @@ const connect = (dbURI) => {
     .catch(err => console.log('Connect DB got error! URI: ' + dbURI + '\n' + err))
 }
 
-module.exports = { connect }
+export default { connect }
