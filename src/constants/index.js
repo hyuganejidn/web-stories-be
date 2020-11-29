@@ -6,3 +6,4 @@ export const TIME = {
   ONE_DAY: 60 * 60 * 24,
   WEEK: 60 * 60 * 24 * 7,
 }
+export const LIMIT_EACH_PAGE = 20

@@ -3,7 +3,7 @@ config()
 import passport from 'passport'
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 
-import User from './api/user/user.model'
+import User from '../api/user/user.model'
 
 const { JWT_SECRET } = process.env
 
@@ -22,7 +22,7 @@ passport.use(
       .then(user => {
         if (user) {
           delete user['password']
-          done(null, user)
+          done(null, user, 'test')
         } else return done(null, false);
       })
       .catch((err) => done(err, false))

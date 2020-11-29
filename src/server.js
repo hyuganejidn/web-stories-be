@@ -4,7 +4,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 import passport from 'passport'
 
-import db from './db'
+import db from './configs/db'
 import apiRoute from './routes'
 import { mongo, port, env, apiRoot } from './configs/variables'
 

@@ -1,4 +1,4 @@
-import  mongoose from 'mongoose'
+import mongoose from 'mongoose'
 
 const roles = ['user', 'admin']
 const userSchema = mongoose.Schema({
@@ -22,5 +22,6 @@ userSchema.pre('save', function (next) {
   console.log(123123)
   next()
 })
-
-module.exports = mongoose.model('User', userSchema)
+userSchema.static = { roles }
+const model = mongoose.model('User', userSchema)
+export default model

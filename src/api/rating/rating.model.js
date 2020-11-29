@@ -3,7 +3,7 @@ import  mongoose from 'mongoose'
 const schema = mongoose.Schema(
   {
     point: { type: Number, required: true, min: 0 },
-    id: { type: mongoose.Types.ObjectId, required: true, },
+    storyId: { type: mongoose.Types.ObjectId, required: true, ref: 'Story'},
     ratingBy: { type: mongoose.Types.ObjectId, required: true, ref: 'User' }
   },
   {
@@ -16,4 +16,5 @@ const schema = mongoose.Schema(
   }
 )
 
-module.exports = mongoose.model('Rating', schema)
+const model = mongoose.model('Rating', schema)
+export default model

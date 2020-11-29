@@ -45,5 +45,6 @@ const login = async ({ body }, res) => {
   }
 }
 
+const getMe = async (req, res) => res.status(200).json(req.user)
 
-module.exports = { register, login }
+export { register, login, getMe }

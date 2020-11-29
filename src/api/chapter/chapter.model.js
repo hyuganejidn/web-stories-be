@@ -1,11 +1,11 @@
-import  mongoose from 'mongoose'
+import mongoose from 'mongoose'
 
 const schema = mongoose.Schema(
   {
     index: { type: Number, required: true },
     name: { type: String, required: true },
     content: { type: String, required: true },
-    story_id: { type: mongoose.Types.ObjectId, ref: 'Story', required: true }
+    storyId: { type: mongoose.Types.ObjectId, ref: 'Story', required: true }
   },
   {
     timestamps: true,
@@ -16,5 +16,5 @@ const schema = mongoose.Schema(
     }
   }
 )
-
-module.exports = mongoose.model('Chapter', schema)
+const model = mongoose.model('Chapter', schema)
+export default model

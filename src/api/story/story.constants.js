@@ -18,12 +18,16 @@ const populate = [
       }]
   },
   {
+    path: 'author',
+    select: ['fullName'],
+  },
+  {
     path: 'chapters'
   },
   {
-    path: 'author'
+    path: 'createdBy'
   }
 ]
 const status = ['unfulfilled', 'full']
 
-module.exports = { populate, status }
+export { populate, status }

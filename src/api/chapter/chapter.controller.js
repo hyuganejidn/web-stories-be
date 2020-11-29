@@ -1,9 +1,24 @@
 import Chapter from './chapter.model'
+import Story from '../story/story.model'
+import { pagination } from '../../helpers/api'
 
-const create = async (req, res) => {
-  Chapter.create({ ...req.body })
-    .then(newChapter => res.status(200).json(newChapter))
-    .catch(err => res.status(400).json(err))
+const create = async ({ body }, res) => {
+  try {
+    const { name, index, content, storyId } = body
+
+    const chapters = await Chapter.find({ storyId })
+    const hasIndexOfChapter = chapters.findIndex(chapter => chapter.index === index)
+    if (~hasIndexOfChapter) return res.status(401).json({ message: 'Index of chapter is existed' })
+
+    const chapter = await Chapter.create({ name, index, content, storyId })
+    const story = await Story.findById(storyId)
+    story.chapters.push(chapter._id)
+    story.save()
+
+    res.status(200).json(chapter)
+  } catch (err) {
+    res.status(400).json(err)
+  }
 }
 
 const getById = async ({ params }, res) => {
@@ -12,9 +27,25 @@ const getById = async ({ params }, res) => {
     .catch(err => res.status(400).json(err))
 }
 
-const index = async ({ params }, res) => {
-  Chapter.find({})
-    .then(chapters => res.status(200).json(chapters))
-    .catch(err => res.status(400).json(err))
+const index = async ({ query }, res) => {
+  try {
+    const filter = {}
+    const total = await Chapter.countDocuments(filter)
+    const data = Chapter.find(filter)
+    const chapters = await pagination(data, query)
+
+    res.status(200).json({ ...chapters, total })
+  } catch (err) {
+    res.status(400).json(err)
+  }
 }
-export { create, getById, index }
+
+const update = async ({ params, body }, res) => {
+  const { id } = params
+
+  Chapter.findByIdAndUpdate(id, body, { new: true, })
+    .then(chapter => res.status(200).json(chapter))
+    .catch(err => res.status(404).json(err))
+}
+
+export { create, getById, index, update }

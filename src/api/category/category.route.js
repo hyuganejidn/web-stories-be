@@ -1,13 +1,14 @@
 import { Router } from 'express'
 
-import { create, index } from './category.controller'
+import { create, index, update, storiesOfCategory } from './category.controller'
 import { authenticate } from '../../middleware/authenticate'
 
 const router = new Router()
 
 
-router.post('/', authenticate, create)
-router.get('/', authenticate, index)
-// router.get('/:id', categoryController.index)
+router.post('/', authenticate(['admin']), create)
+router.get('/', index)
+router.put('/:id', update)
+router.get('/:id/stories', storiesOfCategory)
 
 export default router

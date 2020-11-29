@@ -1,4 +1,4 @@
-const User = require('./user.model')
+import User from './user.model'
 
 const index = async (req, res) => {
   User.find({})
@@ -15,5 +15,4 @@ const updateInfo = async ({ params, body }, res) => {
     .catch(err => res.status(404).json(err))
 }
 
-
-module.exports = { index, updateInfo }
+export { index, updateInfo }

@@ -5,7 +5,7 @@ import { authenticate } from '../../middleware/authenticate'
 
 const router = new Router()
 
-router.post('/', authenticate, create)
+router.post('/',  authenticate(['admin']), create)
 router.get('/', index)
 router.get('/:id', getById)
 
