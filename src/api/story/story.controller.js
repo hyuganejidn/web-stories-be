@@ -29,11 +29,8 @@ const getById = async ({ params }, res) => {
   try {
     const story = await Story.findById(params.id).populate(populate)
     const rating = await story.getRating() || 0
-    // story._doc.rating = rating
-    // console.log(story.rating)
-
-    // story.aggregate([{ $addFields: { "rating": 1 } }])
-    res.status(200).json({ story })
+    story.set('rating', rating, { strict: false })
+    res.status(200).json(story)
   } catch (err) {
     res.status(400).json(err)
   }
