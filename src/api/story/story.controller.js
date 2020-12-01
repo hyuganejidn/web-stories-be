@@ -1,4 +1,5 @@
 import Story from './story.model'
+import Chapter from '../chapter/chapter.model'
 import { populate } from './story.constants'
 import { pagination } from '../../helpers/api'
 
@@ -36,4 +37,19 @@ const getById = async ({ params }, res) => {
   }
 }
 
-export { create, index, getById }
+const getChaptersOfStory = async ({ params, query }, res) => {
+  try {
+    const storyId = params.id
+    const filter = { storyId }
+    const total = await Chapter.countDocuments(filter)
+    const chapters = Chapter.find(filter)
+    const data = await pagination(chapters, query)
+    console.log(filter, total, data)
+
+    res.status(200).json({ ...data, total })
+  } catch (err) {
+    res.status(400).json(err)
+  }
+}
+
+export { create, index, getById, getChaptersOfStory }

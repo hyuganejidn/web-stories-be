@@ -9,11 +9,11 @@ export const pagination = async (dataQuery, opt) => {
       .skip(((page || 1) - 1) * +limit)
       .limit(+limit || LIMIT_EACH_PAGE)
       .sort(sort)
-    console.log({
-      data,
-      currentPage: +page,
-      numberOfResult: data.length
-    })
+    // console.log({
+    //   data,
+    //   currentPage: +page,
+    //   numberOfResult: data.length
+    // })
 
     return {
       data,
