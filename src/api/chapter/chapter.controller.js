@@ -31,7 +31,7 @@ const index = async ({ query }, res) => {
   try {
     const filter = {}
     const total = await Chapter.countDocuments(filter)
-    const data = Chapter.find(filter)
+    const data = Chapter.find(filter).populate({ path: 'storyId', select: ['name'] })
     const chapters = await pagination(data, query)
 
     res.status(200).json({ ...chapters, total })

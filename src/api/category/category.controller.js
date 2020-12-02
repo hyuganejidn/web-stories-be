@@ -44,10 +44,10 @@ const storiesOfCategory = async ({ params, query }, res) => {
     const { id } = params
     const filter = { categories: id }
     const total = await Story.countDocuments(filter)
-    const data = Story.find(filter)
-    const stories = await pagination(data, query)
+    const stories = Story.find(filter)
+    const data = await pagination(stories, query)
 
-    res.status(200).json({ ...stories, total })
+    res.status(200).json({ ...data, total })
   } catch (err) {
     res.status(400).json(err)
   }
