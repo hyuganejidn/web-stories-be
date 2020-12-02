@@ -1,9 +1,10 @@
 import { LIMIT_EACH_PAGE } from "../constants"
 
 export const pagination = async (dataQuery, opt) => {
-  const { page, limit, sort } = opt
+  const { page, limit, sort, q } = opt
   // console.log(page, limit, sort)
   // console.log(dataQuery)
+  const regexSearch = { $regex: q || '', $options: "i" }
   try {
     const data = await dataQuery
       .skip(((page || 1) - 1) * +limit)

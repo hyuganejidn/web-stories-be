@@ -13,17 +13,13 @@ const create = async ({ body, file }, res) => {
 }
 
 
-const index = async ({ query }, res) => {
-  try {
-    const filter = {}
-    const total = await Story.countDocuments(filter)
-    const data = Story.find(filter).populate(populate)
-    const stories = await pagination(data, query)
-
-    res.status(200).json({ ...stories, total })
-  } catch (err) {
-    res.status(400).json(err)
-  }
+const index = async ({ querymen: { query, select, cursor } }, res) => {
+  Story.find(query, select, cursor).populate(populate)
+    .then(async data => {
+      const total = await Story.countDocuments(query).exec()
+      res.status(200).json({ data, total })
+    })
+    .catch(err => res.status(400).json(err))
 }
 
 const getById = async ({ params }, res) => {
@@ -37,19 +33,14 @@ const getById = async ({ params }, res) => {
   }
 }
 
-const getChaptersOfStory = async ({ params, query }, res) => {
-  try {
-    const storyId = params.id
-    const filter = { storyId }
-    const total = await Chapter.countDocuments(filter)
-    const chapters = Chapter.find(filter)
-    const data = await pagination(chapters, query)
-    console.log(filter, total, data)
-
-    res.status(200).json({ ...data, total })
-  } catch (err) {
-    res.status(400).json(err)
-  }
+const getChaptersOfStory = async ({ querymen: { query, select, cursor }, params }, res) => {
+  query.storyId = params.id
+  Chapter.find(query, select, cursor).populate(populate)
+    .then(async data => {
+      const total = await Chapter.countDocuments(query).exec()
+      res.status(200).json({ data, total })
+    })
+    .catch(err => res.status(400).json(err))
 }
 
 export { create, index, getById, getChaptersOfStory }
