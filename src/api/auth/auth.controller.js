@@ -45,6 +45,9 @@ const login = async ({ body }, res) => {
   }
 }
 
-const getMe = async (req, res) => res.status(200).json(req.user)
+const getMe = async (req, res) => {
+  console.log(req.user)
+  res.status(200).json(req.user)
+}
 
 export { register, login, getMe }

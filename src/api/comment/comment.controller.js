@@ -1,4 +1,4 @@
-const Comment = require('./comment.model')
+import Comment from './comment.model'
 const { populate } = require('./comment.constants')
 
 const create = async (req, res) => {
