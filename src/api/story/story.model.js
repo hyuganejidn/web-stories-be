@@ -33,7 +33,7 @@ const StorySchema = mongoose.Schema(
 StorySchema.virtual('comments', {
   ref: 'Comment',
   localField: '_id',
-  foreignField: 'storyId',
+  foreignField: 'story',
   options: {
     sort: { updatedAt: -1 }
   }

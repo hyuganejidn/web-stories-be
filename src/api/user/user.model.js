@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
   fullName: { type: String, require: true },
   password: { type: String, require: true, minLength: MIN_PASSWORD, maxLength: MAX_PASSWORD },
   role: { type: String, enum: roles, default: 'user' },
-  avatarUrl: { type: String, },
+  avatarUrl: { type: String, default: '' },
   favoriteStories: [{ type: mongoose.Schema.ObjectId, ref: 'Story' }]
 }, {
   timestamps: true,

@@ -5,13 +5,12 @@ import { validateRegister, validationLogin, hashPassword, generateToken } from '
 
 const register = async ({ body }, res) => {
   const errors = validateRegister(body)
-  if (!Object.keys(errors)) return res.status(400).json(errors);
+  if (!Object.keys(errors)) return res.status(400).json(errors)
 
   const { username, password } = body
   const user = await User.findOne({ username })
-  if (user) {
-    return res.status(400).json({ username: 'Username is already exists.' });
-  }
+  if (user) return res.status(400).json({ username: 'Username is already exists.' })
+
 
   const securePassword = await hashPassword(password)
 

@@ -1,5 +1,7 @@
 import User from './user.model'
 import Story from '../story/story.model'
+import Comment from '../comment/comment.model'
+import { populate } from '../comment/comment.constants'
 
 const index = async (req, res) => {
   User.find({}).populate('favoriteStories')
@@ -44,4 +46,10 @@ const storiesFavoriteOfUser = async ({ querymen: { query, select, cursor }, user
   }
 }
 
-export { index, updateInfo, reactStory, storiesFavoriteOfUser }
+const commentsOfUser = async ({ user }, res) => {
+  Comment.find({ commentParent: null, author: user.id }).populate(populate)
+    .then(comments => res.status(200).json(comments))
+    .catch(err => res.status(400).json(err))
+}
+
+export { index, updateInfo, reactStory, storiesFavoriteOfUser, commentsOfUser }
