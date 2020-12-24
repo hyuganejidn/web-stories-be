@@ -3,10 +3,14 @@ import Story from '../story/story.model'
 import Comment from '../comment/comment.model'
 import { populate } from '../comment/comment.constants'
 
-const index = async (req, res) => {
-  User.find({}).populate('favoriteStories')
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(403).json(err))
+const index = async ({querymen: {query, select, cursor}}, res) => {
+  try {
+    const data = await User.find(query, select, cursor).populate('favoriteStories')
+    const total = await User.countDocuments(query).exec()
+    res.status(200).json({ data, total })
+  } catch (err) {
+    res.status(400).json(err)
+  }
 }
 
 const updateInfo = async ({ params, body }, res) => {

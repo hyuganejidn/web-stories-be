@@ -5,7 +5,7 @@ import { index, updateInfo, reactStory, storiesFavoriteOfUser, commentsOfUser } 
 import { authenticate } from '../../middleware/authenticate'
 const router = new Router()
 
-router.get('/', authenticate(['admin']), index)
+router.get('/', authenticate(['admin']), query(), index)
 router.get('/me/comments', authenticate(), commentsOfUser)
 
 router.get('/storiesFavorite', authenticate(['admin']), query(), storiesFavoriteOfUser)
